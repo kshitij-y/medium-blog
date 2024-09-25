@@ -87,7 +87,9 @@ app.post('/api/v1/signin', async (c) => {
 
 
 app.post('/api/v1/blog', (c) => {
-  return c.text('hello')
+  return c.json({
+    msg: "hello"
+  })
 })
 
 app.put('/api/v1/blog', (c) => {
