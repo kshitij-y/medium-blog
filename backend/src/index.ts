@@ -93,7 +93,9 @@ app.post('/api/v1/blog', (c) => {
 })
 
 app.put('/api/v1/blog', (c) => {
-  return c.text('hello')
+  return c.json({
+    msg: "hello"
+  })
 })
 
 app.get('/api/v1/blog:id', (c) => {
