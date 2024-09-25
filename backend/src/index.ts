@@ -24,7 +24,6 @@ app.post('/api/v1/signup', async (c) => {
 
   try {
     const hashedPassword = await bcrypt.hash(body.password, saltRounds);
-    console.log("Hashed password created");
 
     const user = await prisma.user.create({
       data: {
@@ -33,10 +32,7 @@ app.post('/api/v1/signup', async (c) => {
       },
     });
 
-    console.log("User created:", user);
-
     const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-    console.log("JWT generated");
 
     return c.json({ jwt });
   } catch (e) {
@@ -71,6 +67,13 @@ app.post('/api/v1/signin', async (c) => {
       })
     }
 
+    const isUser = await bcrypt.compare(body.password, user.password);
+    if(!isUser){
+      return c.json({
+        error: "Password is wrong"
+      })
+    }
+
     const jwt = await sign({id: user.id}, c.env.JWT_SECRET);
     return c.json({
       jwt
@@ -81,6 +84,7 @@ app.post('/api/v1/signin', async (c) => {
     return c.json({ msg: "Internal Server Error" });
   }
 });
+
 
 app.post('/api/v1/blog', (c) => {
   return c.text('hello')
