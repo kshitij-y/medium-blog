@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { decode, sign } from 'hono/jwt'
+import { decode, sign, verify } from 'hono/jwt'
 import bcrypt from 'bcryptjs';
 const saltRounds = 10;
 
@@ -11,6 +11,26 @@ const app = new Hono<{
     JWT_SECRET: string,
   }
 }>()
+
+//middleware
+app.use('/api/v1/blog/*', async (c, next) => {
+
+  const header = c.req.header("authorization") || "";
+  // Bearer token
+
+  const token = header.split(" ")[1];
+  const response = await verify(token, c.env.JWT_SECRET);
+  if(response.id){
+    next()
+  } else{
+    c.status(403)
+    return c.json({
+      error: "unauthorized"
+    })
+  }
+
+})
+
 
 app.post('/api/v1/signup', async (c) => {
   console.log("Request received");
