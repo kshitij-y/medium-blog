@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
 import bcrypt from 'bcryptjs';
-import { signupInput } from "../zod";
+import { signupInput, signinInput } from "@kshitij_npm/medium";
 const saltRounds = 10;
 export const userRouter = new Hono<{
     Bindings: {
@@ -20,7 +20,7 @@ userRouter.post('/signup', async (c) => {
     }).$extends(withAccelerate());
   
     const body = await c.req.json();
-    const { success } = signupInput.safeParse(body);
+    const { success } = signinInput.safeParse(body);
     if(!success){
       c.status(411);
       return c.json({
@@ -59,7 +59,14 @@ userRouter.post('/signin', async (c) => {
     }).$extends(withAccelerate())
     
     const body = await c.req.json();
-  
+    const { success } = signupInput.safeParse(body);
+    if(!success){
+      c.status(411);
+      return c.json({
+        message: "incorrect inputs;"
+      })
+    }
+    
     try {
       const user = await prisma.user.findUnique({
         where: {
