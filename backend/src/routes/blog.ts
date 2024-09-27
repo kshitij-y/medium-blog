@@ -2,6 +2,7 @@ import { Hono } from "hono"
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
+
 // import bcrypt from 'bcryptjs';
 // const saltRounds = 10;
 export const blogRouter = new Hono<{
@@ -13,6 +14,7 @@ export const blogRouter = new Hono<{
         userId: string;
     }
 }>()
+
 
 blogRouter.use("/*", async (c, next) => {
 
@@ -88,6 +90,7 @@ blogRouter.get('/', async (c) => {
     }).$extends(withAccelerate());
 
     try{
+        console.log(body.id);
         const blog  = await prisma.post.findFirst({
             where: {
                 id: body.id
