@@ -1,42 +1,15 @@
 import { Hono } from 'hono'
-import { PrismaClient } from '@prisma/client/edge'
-import { withAccelerate } from '@prisma/extension-accelerate'
-import { decode, sign, verify } from 'hono/jwt'
-import bcrypt from 'bcryptjs';
-const saltRounds = 10;
 import { userRouter } from './routes/user';
 import { blogRouter } from './routes/blog';
-const app = new Hono<{
+
+export const app = new Hono<{
   Bindings: {
-    DATABASE_URL: string,
-    JWT_SECRET: string,
+      DATABASE_URL: string;
+      JWT_SECRET: string;
   }
-}>()
+}>();
 
+app.route('/api/v1/user', userRouter)
+app.route('/api/v1/book', blogRouter)
 
-app.route("/api/v1/user", userRouter);
-app.route("/api/v1/blog", blogRouter);
-
-
-//middleware
-app.use('/api/v1/blog/*', async (c, next) => {
-
-  const header = c.req.header("authorization") || "";
-  // Bearer token
-
-  const token = header.split(" ")[1];
-  const response = await verify(token, c.env.JWT_SECRET);
-  if(response.id){
-    next()
-  } else{
-    c.status(403)
-    return c.json({
-      error: "unauthorized"
-    })
-  }
-
-})
-
-
-
-
+export default app
