@@ -39,6 +39,8 @@ blogRouter.post('/', async (c) => {
 
     const body = await c.req.json();
     const authorId = c.get("userId");
+    console.log(authorId);
+
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
