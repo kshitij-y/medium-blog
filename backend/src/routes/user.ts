@@ -69,7 +69,7 @@ userRouter.post('/signin', async (c) => {
           msg: "Not found"
         })
       }
-  
+      // don't need to hash the body.password , it does by itself
       const isUser = await bcrypt.compare(body.password, user.password);
       if(!isUser){
         return c.json({
@@ -87,4 +87,3 @@ userRouter.post('/signin', async (c) => {
       return c.json({ msg: "Internal Server Error" });
     }
 });
-  
