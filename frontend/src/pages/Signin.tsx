@@ -1,6 +1,34 @@
+import { useState } from "react";
+import axios, { AxiosResponse } from 'axios';
+
 //@ts-ignore
 export const Signin = ({ isOpen, onClose, navSignup }) => {
     if (!isOpen) return null; // Don't render the modal if it's not open
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const handleSignin = async () => {
+        setMessage("");
+        const backend_api = import.meta.env.VITE_API;
+        console.log(backend_api);   
+        try {
+            const res: AxiosResponse<{ message: string }> = await axios.post(`${backend_api}/api/v1/user/signin`, {
+                email,
+                password,
+            });
+            setMessage(res.data.message); // Set the message in state
+            // if (res.data.token) {
+            //     localStorage.setItem("token", res.data.token);
+            //     localStorage.setItem("id", res.data.id);
+            //     localStorage.setItem("logedin", true);
+            //     navigate("/dashboard");
+            // }
+        } catch (error) {
+            //@ts-ignore
+            setMessage(error.response?.data?.message || "An error occurred");
+        }
+    }
 
     return (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
@@ -12,16 +40,17 @@ export const Signin = ({ isOpen, onClose, navSignup }) => {
                     </button>
                 </div>
                 <div className="justify-center text-center my-10 text-3xl font-medium font-serif ">
-                    Join Medium.
+                    Welcome back.
                 </div>
                 <div className="flex flex-col">
                     {/* //<label className="block mx-24 py-2 px-2">Email:</label> */}
-                    <input className="text-gray py-2 px-4 my-4 mx-24 rounded-3xl font-normal border border-black " placeholder="Enter your email"/>
-                    <input className="text-gray py-2 px-4 mx-24 rounded-3xl font-normal border border-black" placeholder="Enter your password"/>
+                    <input className="text-gray py-2 px-4 my-4 mx-24 rounded-3xl font-normal border border-black " onChange={e => {setEmail(e.target.value)}} placeholder="Enter your email"/>
+                    <input className="text-gray py-2 px-4 mx-24 rounded-3xl font-normal border border-black" onChange={e => {setPassword(e.target.value)}} placeholder="Enter your password"/>
 
-                    <button className="bg-black text-white py-2 px-4 mx-24 my-4 rounded-3xl font-bold hover:bg-gray-700">
+                    <button className="bg-black text-white py-2 px-4 mx-24 my-4 rounded-3xl font-bold hover:bg-gray-700" onClick={handleSignin}>
                         Sign In
                     </button>
+                    {message && <p className="text-red-500 flex flex-row mx-24 justify-center items-center">{message}</p>}
 
                 </div>
                 <div className="flex flex-row py-2 px-4 mx-24 my-6 justify-center items-center">

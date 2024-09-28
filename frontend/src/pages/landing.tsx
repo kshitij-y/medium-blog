@@ -32,22 +32,33 @@ export const Landing = () => {
                 <button className="bg-black text-white py-2 px-4 rounded-3xl font-bold" onClick={openSignup}>Get started</button>
             </div>
         </div>
+
         <div className="flex flex-row flex-grow border-b border-black pl-40 justify-between">
-            <div className="">
-                <div className="font-serif font-bold text-8xl w-full pt-48 leading-none text-gray-800">
-                    Human <br/> Stories & Ideas
+            <div className="min-w-max">
+                <div className="z-index-1 font-serif font-bold text-8xl w-full pt-48 leading-none text-gray-800">
+                    Human <br /> Stories & Ideas
                 </div>
-                <div className="py-8  text-2xl">
+                <div className="py-8 text-2xl">
                     A place to read, write, and deepen your understanding
                 </div>
                 <div>
-                <button className="bg-black text-white py-2 px-8 rounded-3xl font-bold" onClick={openLogin}>Start reading..</button>
+                    <button className="bg-black text-white py-2 px-8 rounded-3xl font-bold" onClick={openLogin}>
+                        Start reading..
+                    </button>
                 </div>
             </div>
-            <div className="pt-10">
-                <img  className="" alt="Brand image" src="https://miro.medium.com/v2/format:webp/4*SdjkdS98aKH76I8eD0_qjw.png" width="460" height="600" loading="eager"></img>
+            <div className="pt-10 flex-shrink-0">
+                <img
+                    className="fixed-size-img"
+                    alt="Brand image"
+                    src="https://miro.medium.com/v2/format:webp/4*SdjkdS98aKH76I8eD0_qjw.png"
+                    width="460"
+                    height="600"
+                    loading="eager"
+                />
             </div>
         </div>
+
         <div className="border-t border-gray-300 py-4 text-sm text-gray-600">
             <div className="flex justify-center space-x-4">
                 <a className="hover:underline">

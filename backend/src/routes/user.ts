@@ -31,9 +31,22 @@ userRouter.post('/signup', async (c) => {
   
     try {
       const hashedPassword = await bcrypt.hash(body.password, saltRounds);
-  
+
+      const found = await prisma.user.findUnique({
+        where: {
+            email: body.email
+        }
+      });
+      
+      if(found){
+        c.status(409);
+        return c.json({
+          message: "User already exists"
+        })
+      }
       const user = await prisma.user.create({
         data: {
+          name: body.name || "no-name",
           email: body.email,
           password: hashedPassword,
         },
@@ -41,11 +54,14 @@ userRouter.post('/signup', async (c) => {
   
       const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
   
-      return c.json({ jwt });
+      return c.json({
+         jwt,
+         message: "Signed Up"
+      });
     } catch (e) {
       console.error("Error:", e);
       c.status(403);
-      return c.json({ error: "Error while signing up" });
+      return c.json({ message: "Error while signing up" });
     }
 });
   
@@ -66,7 +82,7 @@ userRouter.post('/signin', async (c) => {
         message: "incorrect inputs;"
       })
     }
-    
+
     try {
       const user = await prisma.user.findUnique({
         where: {
@@ -77,24 +93,25 @@ userRouter.post('/signin', async (c) => {
       if(!user) {
         c.status(403);
         return c.json({
-          msg: "Not found"
+          message: "Not found"
         })
       }
       // don't need to hash the body.password , it does by itself
       const isUser = await bcrypt.compare(body.password, user.password);
       if(!isUser){
         return c.json({
-          error: "Password is wrong"
+          message: "Password is wrong"
         })
       }
   
       const jwt = await sign({id: user.id}, c.env.JWT_SECRET);
       return c.json({
+        message: "logged in", //remove this one
         jwt
       })
     } catch (error) {
       console.error(error);
       c.status(500);
-      return c.json({ msg: "Internal Server Error" });
+      return c.json({ message: "Internal Server Error" });
     }
 });
