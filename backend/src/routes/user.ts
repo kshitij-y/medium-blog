@@ -5,6 +5,7 @@ import { decode, sign, verify } from 'hono/jwt'
 import bcrypt from 'bcryptjs';
 import { signupInput, signinInput } from "@kshitij_npm/medium";
 const saltRounds = 10;
+
 export const userRouter = new Hono<{
     Bindings: {
       DATABASE_URL: string,
@@ -20,11 +21,12 @@ userRouter.post('/signup', async (c) => {
     }).$extends(withAccelerate());
   
     const body = await c.req.json();
-    const { success } = signinInput.safeParse(body);
+    const { success } = signupInput.safeParse(body);
     if(!success){
       c.status(411);
       return c.json({
-        message: "incorrect inputs;"
+        message: "incorrect inputs",
+        loggedIn: false
       })
     }
     console.log("Request body:", body);
@@ -41,7 +43,8 @@ userRouter.post('/signup', async (c) => {
       if(found){
         c.status(409);
         return c.json({
-          message: "User already exists"
+          message: "User already exists",
+          loggedIn: false
         })
       }
       const user = await prisma.user.create({
@@ -55,13 +58,14 @@ userRouter.post('/signup', async (c) => {
       const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
   
       return c.json({
+        loggedIn: true,
          jwt,
          message: "Signed Up"
       });
     } catch (e) {
       console.error("Error:", e);
       c.status(403);
-      return c.json({ message: "Error while signing up" });
+      return c.json({ message: "Error while signing up", loggedIn: false });
     }
 });
   
@@ -75,11 +79,13 @@ userRouter.post('/signin', async (c) => {
     }).$extends(withAccelerate())
     
     const body = await c.req.json();
-    const { success } = signupInput.safeParse(body);
+    console.log(body)
+    const { success } = signinInput.safeParse(body);
     if(!success){
       c.status(411);
       return c.json({
-        message: "incorrect inputs;"
+        message: "incorrect inputs;",
+        loggedIn: false
       })
     }
 
@@ -93,25 +99,28 @@ userRouter.post('/signin', async (c) => {
       if(!user) {
         c.status(403);
         return c.json({
-          message: "Not found"
+          message: "Not found",
+          loggedIn: false
         })
       }
       // don't need to hash the body.password , it does by itself
       const isUser = await bcrypt.compare(body.password, user.password);
       if(!isUser){
         return c.json({
-          message: "Password is wrong"
+          message: "Password is wrong",
+          loggedIn: false
         })
       }
   
       const jwt = await sign({id: user.id}, c.env.JWT_SECRET);
       return c.json({
-        message: "logged in", //remove this one
-        jwt
+        loggedIn: true,
+        jwt: jwt,
+        message: "Login Successfull", //remove this one
       })
     } catch (error) {
       console.error(error);
       c.status(500);
-      return c.json({ message: "Internal Server Error" });
+      return c.json({ message: "Internal Server Error", loggedIn: false });
     }
 });

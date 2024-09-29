@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios, { AxiosResponse } from 'axios';
+import { useNavigate } from "react-router-dom";
 
 //@ts-ignore
 export const Signup = ({isOpen, onClose, navSignin}) => {
     if(!isOpen) return null;
 
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,18 +16,21 @@ export const Signup = ({isOpen, onClose, navSignin}) => {
         const backend_api = import.meta.env.VITE_API;
         console.log(backend_api);   
         try {
-            const res: AxiosResponse<{ message: string }> = await axios.post(`${backend_api}/api/v1/user/signup`, {
+            const res: AxiosResponse<{
+                message: string
+                loggedIn: boolean
+                jwt: string
+            }> = await axios.post(`${backend_api}/api/v1/user/signup`, {
                 name,
                 email,
                 password,
             });
-            setMessage(res.data.message); // Set the message in state
-            // if (res.data.token) {
-            //     localStorage.setItem("token", res.data.token);
-            //     localStorage.setItem("id", res.data.id);
-            //     localStorage.setItem("logedin", true);
-            //     navigate("/dashboard");
-            // }
+            setMessage(res.data.message);
+            if(res.data.loggedIn){
+                localStorage.setItem("tokoen", res.data.jwt);
+                navigate("/blogs")
+            }
+
         } catch (error) {
             //@ts-ignore
             setMessage(error.response?.data?.message || "An error occurred");
