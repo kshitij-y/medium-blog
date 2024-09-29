@@ -19,6 +19,7 @@ model User {
   name      String?
   password  String
   posts     Post[]
+  saved     String[]
 }
 
 model Post  {
@@ -28,4 +29,7 @@ model Post  {
   published Boolean @default(false)
   author    User @relation(fields: [authorId], references: [id])
   authorId  String
+  likes     String @default("0")
+  dislikes  String @default("0")
+  saves     String @default("0")
 }
