@@ -20,6 +20,7 @@ model User {
   password  String
   posts     Post[]
   saved     String[]
+  date      DateTime @default(now())
 }
 
 model Post  {
