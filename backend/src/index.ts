@@ -10,9 +10,9 @@ export const app = new Hono<{
   }
 }>();
 app.use('*', cors({
-  origin: '*', // Allows requests from any origin
-  allowMethods: ['GET', 'POST', 'OPTIONS'], // Specify allowed methods
-  allowHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.route('/api/v1/user', userRouter)

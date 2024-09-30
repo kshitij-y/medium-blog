@@ -13,6 +13,8 @@ export const userRouter = new Hono<{
     }
 }>()
 
+
+
 userRouter.post('/signup', async (c) => {
     console.log("Request received");
   
@@ -116,8 +118,8 @@ userRouter.post('/signin', async (c) => {
       return c.json({
         loggedIn: true,
         jwt: jwt,
-        message: "Login Successfull", //remove this one
-      })
+        message: "Login Successfull",
+      });
     } catch (error) {
       console.error(error);
       c.status(500);

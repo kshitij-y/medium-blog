@@ -19,7 +19,7 @@ model User {
   name      String?
   password  String
   posts     Post[]
-  saved     String[]
+  saved     String[] @default([])
   date      DateTime @default(now())
 }
 
@@ -34,3 +34,61 @@ model Post  {
   dislikes  String @default("0")
   saves     String @default("0")
 }
+
+
+// model User {
+//   id            String      @id @default(uuid())
+//   email         String      @unique
+//   name          String?
+//   password      String
+//   posts         Post[]      // One-to-many relation with posts
+//   comments      Comment[]   // One-to-many relation with comments
+//   likes         Post[]      @relation("LikedPosts", fields: [likedPostId], references: [id])  // Posts liked by the user
+//   dislikes      Post[]      @relation("DislikedPosts", fields: [dislikedPostId], references: [id])  // Posts disliked by the user
+//   savedPosts    Post[]      @relation("SavedPosts", fields: [savedPostId], references: [id])  // Posts saved by the user
+
+//   following     User[]      @relation("UserFollows", references: [id])  // Users this user is following
+//   followers     User[]      @relation("UserFollows", references: [id])  // Users following this user
+
+//   likedPostId   String?
+//   dislikedPostId String?
+//   savedPostId   String?
+//   date          DateTime    @default(now())
+// }
+
+// model Post {
+//   id            String      @id @default(uuid())
+//   title         String
+//   content       String
+//   published     Boolean     @default(false)
+//   author        User        @relation(fields: [authorId], references: [id])
+//   authorId      String
+
+//   likes         User[]      @relation("LikedPosts")  // Users who liked this post
+//   dislikes      User[]      @relation("DislikedPosts")  // Users who disliked this post
+//   saves         User[]      @relation("SavedPosts")  // Users who saved this post
+
+//   comments      Comment[]   // One-to-many relation with comments
+//   createdAt     DateTime    @default(now())
+//   updatedAt     DateTime    @updatedAt
+// }
+
+// model Comment {
+//   id            String      @id @default(uuid())
+//   content       String
+//   post          Post        @relation(fields: [postId], references: [id])
+//   postId        String
+//   author        User        @relation(fields: [authorId], references: [id])
+//   authorId      String
+//   createdAt     DateTime    @default(now())
+// }
+
+// model Follower {
+//   followerId    String
+//   followingId   String
+
+//   follower      User        @relation("UserFollows", fields: [followerId], references: [id])
+//   following     User        @relation("UserFollows", fields: [followingId], references: [id])
+
+//   @@id([followerId, followingId])  // Composite key to ensure unique follower/following pair
+// }
