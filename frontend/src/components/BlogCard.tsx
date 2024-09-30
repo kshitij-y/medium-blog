@@ -11,7 +11,7 @@ interface BlogProps {
     saves: string
 }
 
-export const BLogCard = ({
+export const BlogCard = ({
     authorName,
     title,
     content,
