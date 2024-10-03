@@ -13,11 +13,6 @@ interface BlogProps {
 export const MiniCard = ({
     authorName,
     title,
-    content,
-    publishDate,
-    likes,
-    diskes,
-    saves
 }: BlogProps) => {
 
     return (
@@ -25,7 +20,6 @@ export const MiniCard = ({
             <div className="flex">
                 <Avtar name={authorName} />
                 <div className="mx-4">{authorName},</div>
-                <div className="">{publishDate}</div>
             </div>
             <div className="font-extrabold text-sm my-2">
                 {title}

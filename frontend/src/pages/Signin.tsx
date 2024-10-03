@@ -15,6 +15,7 @@ export const Signin = ({ isOpen, onClose, navSignup }) => {
         console.log(backend_api);   
         try {
             const res: AxiosResponse<{
+                name: string
                 loggedIn: boolean,
                 jwt: string
                 message: string 
@@ -25,7 +26,8 @@ export const Signin = ({ isOpen, onClose, navSignup }) => {
             setMessage(res.data.message); // Set the message in state
             console.log('Logged in status:', res.data.loggedIn);
             if(res.data.loggedIn){
-                localStorage.setItem("tokoen", res.data.jwt);
+                localStorage.setItem("token", res.data.jwt);
+                localStorage.setItem("name", res.data.name);
                 navigate("/blogs")
             }
         } catch (error) {
