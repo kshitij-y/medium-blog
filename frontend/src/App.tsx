@@ -4,6 +4,7 @@ import { Blog } from './pages/Blog';
 import { Landing } from './pages/landing';
 import { Blogs } from './pages/Blogs';
 import { useEffect } from 'react';
+import { WriteBlogs } from './pages/WriteBlogs';
 
 function App() {
   return (
@@ -23,13 +24,14 @@ function MainRoutes() {
     } else {
       navigate('/');
     }
-  }, [token, navigate]);
+  }, [token]);
 
   return (
     <Routes>
       <Route path="/blog/:id" element={<Blog />} />
       <Route path="/" element={<Landing />} />
       <Route path="/blogs" element={<Blogs />} />
+      <Route path="/blogs/WriteBlogs" element={<WriteBlogs />} />
     </Routes>
   );
 }
