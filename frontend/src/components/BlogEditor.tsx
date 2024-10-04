@@ -44,7 +44,7 @@ export const BlogEditor: React.FC = () => {
                 className="h-96" // Set height for the editor
             />
             <div className='mt-16 justify-center flex'>
-                    <button className=" bg-black text-white py-2 px-8 px-auto rounded-3xl font-bold" onClick={handleSubmit}>
+                    <button className=" bg-[#2C3639] text-white py-2 px-8 px-auto rounded-3xl font-bold hover:bg-[#3F4E4F]" onClick={handleSubmit}>
                         Submit
                     </button>
             </div>

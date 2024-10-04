@@ -153,7 +153,7 @@ export const Blogs = () => {
     ];
 
     return (
-        <div className="flex flex-col w-[99vw]" style={{ backgroundColor: '#FBEAEB' }}>
+        <div className="flex flex-col w-[99vw] bg-[#DCD7C9]" >
           {/* Appbar with toggleSidePlate */}
           <div className="w-full">
             <Appbar toggleSidePlate={() => setSidePlateVisible(!isSidePlateVisible)} />
