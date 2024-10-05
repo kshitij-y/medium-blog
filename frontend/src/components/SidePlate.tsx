@@ -4,10 +4,7 @@ import followers from '../assets/followers.svg';
 import setting from '../assets/setting.svg';
 import signout from '../assets/signout.svg';
 
-interface props {
-    toggleSidePlate: () => void
-} 
-export const SidePlate = ({ toggleSidePlate }: props) => {
+export const SidePlate = () => {
     const navigate = useNavigate();
 
     const handleLogOut = () => {
@@ -19,13 +16,6 @@ export const SidePlate = ({ toggleSidePlate }: props) => {
     
     return (
         <div className="flex flex-col text-white h-screen sticky top-0 w-full px-2" style={{ backgroundColor: '#3F4E4F' }}>
-            {/*Three lines for hidding the side button*/}
-            <div className="lg:hidden cursor-pointer pl-48 py-2 border-b border-b-white" onClick={toggleSidePlate}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                    <path fill="none" d="M0 0h24v24H0z" />
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-                </svg>
-            </div>
 
             <div className='p-4 border-b border-b-white-100'>
                 <div className="cursor-pointer flex p-2">

@@ -1,162 +1,37 @@
 import { Appbar } from "../components/Appbar";
 import { BlogCard } from "../components/BlogCard"
 import { SidePlate } from "../components/SidePlate";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios, { AxiosResponse } from 'axios';
+
 
 export const Blogs = () => {
-    const [isSidePlateVisible, setSidePlateVisible] = useState(false);
-    const blogs = [
-        {
-            authorName: "Peach Villacarlos",
-            title: "Planning our 2024 Tour du Mont Blanc Adventure",
-            content: "How a Gen X couple from the SF Bay Area planned the most amazing adventure of their life — a journey on foot through 3 countries, over 105 miles, with 66,000' of elevation change! How a Gen X couple from the SF Bay Area planned the most amazing adventure of their life — a journey on foot through 3 countries, over 105 miles, with 66,000' of elevation change!",
-            publishDate: "Sep 4, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "John Doe",
-            title: "Exploring the Andes Mountains",
-            content: "An exhilarating journey through one of the longest mountain ranges in the world.",
-            publishDate: "Aug 22, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Jane Smith",
-            title: "Cycling Across Europe",
-            content: "A thrilling adventure cycling through some of Europe’s most beautiful landscapes.",
-            publishDate: "Jul 15, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Peach Villacarlos",
-            title: "Planning our 2024 Tour du Mont Blanc Adventure",
-            content: "How a Gen X couple from the SF Bay Area planned the most amazing adventure of their life — a journey on foot through 3 countries, over 105 miles, with 66,000' of elevation change!",
-            publishDate: "Sep 4, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "John Doe",
-            title: "Exploring the Andes Mountains",
-            content: "An exhilarating journey through one of the longest mountain ranges in the world.",
-            publishDate: "Aug 22, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Jane Smith",
-            title: "Cycling Across Europe",
-            content: "A thrilling adventure cycling through some of Europe’s most beautiful landscapes.",
-            publishDate: "Jul 15, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "John Doe",
-            title: "Exploring the Andes Mountains",
-            content: "An exhilarating journey through one of the longest mountain ranges in the world.",
-            publishDate: "Aug 22, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Jane Smith",
-            title: "Cycling Across Europe",
-            content: "A thrilling adventure cycling through some of Europe’s most beautiful landscapes.",
-            publishDate: "Jul 15, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Peach Villacarlos",
-            title: "Planning our 2024 Tour du Mont Blanc Adventure",
-            content: "How a Gen X couple from the SF Bay Area planned the most amazing adventure of their life — a journey on foot through 3 countries, over 105 miles, with 66,000' of elevation change!",
-            publishDate: "Sep 4, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "John Doe",
-            title: "Exploring the Andes Mountains",
-            content: "An exhilarating journey through one of the longest mountain ranges in the world.",
-            publishDate: "Aug 22, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Jane Smith",
-            title: "Cycling Across Europe",
-            content: "A thrilling adventure cycling through some of Europe’s most beautiful landscapes.",
-            publishDate: "Jul 15, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "John Doe",
-            title: "Exploring the Andes Mountains",
-            content: "An exhilarating journey through one of the longest mountain ranges in the world.",
-            publishDate: "Aug 22, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Jane Smith",
-            title: "Cycling Across Europe",
-            content: "A thrilling adventure cycling through some of Europe’s most beautiful landscapes.",
-            publishDate: "Jul 15, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Peach Villacarlos",
-            title: "Planning our 2024 Tour du Mont Blanc Adventure",
-            content: "How a Gen X couple from the SF Bay Area planned the most amazing adventure of their life — a journey on foot through 3 countries, over 105 miles, with 66,000' of elevation change!",
-            publishDate: "Sep 4, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "John Doe",
-            title: "Exploring the Andes Mountains",
-            content: "An exhilarating journey through one of the longest mountain ranges in the world.",
-            publishDate: "Aug 22, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        },
-        {
-            authorName: "Jane Smith",
-            title: "Cycling Across Europe",
-            content: "A thrilling adventure cycling through some of Europe’s most beautiful landscapes.",
-            publishDate: "Jul 15, 2024",
-            likes: "30",
-            diskes: "10",
-            saves: "12"
-        }
-    ];
+    const [blogs, setBlogs] = useState<any[]>([]);
+    const backend_api = import.meta.env.VITE_API;
+
+    useEffect(() => {
+        const fetchBlog = async () => {
+            try {
+                const res: AxiosResponse<any> = await axios.get(`${backend_api}/api/v1/blog/bulk`, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("token")
+                    }
+                });
+                setBlogs(res.data.blog);
+                console.log(res.data.blog);
+            } catch (error) {
+                console.error("Error fetching the blog:", error);
+            }
+        };
+        
+        fetchBlog();
+    },[]);
 
     return (
         <div className="flex flex-col w-[99vw] bg-[#DCD7C9]" >
           {/* Appbar with toggleSidePlate */}
           <div className="w-full">
-            <Appbar toggleSidePlate={() => setSidePlateVisible(!isSidePlateVisible)} />
+            <Appbar />
           </div>
     
           {/* Main content and SidePlate */}
@@ -165,7 +40,7 @@ export const Blogs = () => {
               {blogs.map((blog, index) => (
                 <BlogCard
                   key={index}
-                  authorName={blog.authorName}
+                  authorName={blog.authorId}
                   title={blog.title}
                   content={blog.content}
                   publishDate={blog.publishDate}
@@ -176,17 +51,10 @@ export const Blogs = () => {
               ))}
             </div>
     
-            {/* SidePlate hidden on smaller screens, visible on lg+ */}
             <div className="hidden lg:flex flex justify-center relative w-[18%]">
-              <SidePlate toggleSidePlate={() => setSidePlateVisible(!isSidePlateVisible)}/>
+              <SidePlate />
             </div>
     
-            {/* SidePlate for mobile, toggled visibility */}
-            {isSidePlateVisible && (
-              <div className="fixed top-0 right-0 w-[250px] h-full bg-white z-50 shadow-lg lg:hidden">
-                <SidePlate toggleSidePlate={() => setSidePlateVisible(!isSidePlateVisible)}/>
-              </div>
-            )}
           </div>
         </div>
     );

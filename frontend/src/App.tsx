@@ -19,12 +19,13 @@ function MainRoutes() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token) {
+    // Only redirect from the home route ('/') based on token
+    if (window.location.pathname === '/' && token) {
       navigate('/blogs');
-    } else {
+    } else if (window.location.pathname === '/' && !token) {
       navigate('/');
     }
-  }, [token]);
+  }, [token, navigate]);
 
   return (
     <Routes>
@@ -32,6 +33,7 @@ function MainRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/blogs/WriteBlogs" element={<WriteBlogs />} />
+      <Route path="/blog" element={<Blog />} />
     </Routes>
   );
 }
