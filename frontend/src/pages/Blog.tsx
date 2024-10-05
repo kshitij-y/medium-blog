@@ -27,7 +27,7 @@ export const Blog = () => {
 
     return (
         <div className="w-full bg-[#DCD7C9]">
-            <Appbar toggleSidePlate={() => {}}/>
+            <Appbar />
             <div className="max-w-4xl mx-auto px-12 bg-[#DCD7C9]">
                 {blog ? (
                     <div>
