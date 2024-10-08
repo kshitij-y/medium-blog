@@ -33,7 +33,7 @@ function MainRoutes() {
       <Route path="/" element={<Landing />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/blogs/WriteBlogs" element={<WriteBlogs />} />
-      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:id" element={<Blog />} />
     </Routes>
   );
 }

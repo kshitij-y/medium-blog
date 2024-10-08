@@ -30,7 +30,7 @@ export const Appbar = () => {
 
     return (
         <>
-            <div className="border-b border-black w-full py-2 justify-between flex flex-row px-10 bg-white" style={{ backgroundColor: '#DCD7C9' }}>
+            <div className="border-b border-black w-full py-2 justify-between flex flex-row px-10" style={{ backgroundColor: '#DCD7C9' }}>
                 <div className="flex flex-row w-[50%]">
                     <div className="pt-1">
                         <img src={medium} onClick={() => {navigate('/blogs')}}/>
