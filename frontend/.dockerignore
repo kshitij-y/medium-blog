@@ -1,0 +1,19 @@
+# Ignore node modules (if installed locally)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignore configuration files not needed in the image
+.eslintignore
+.eslint.config.js
+.prettierignore
+.prettierrc
+.vscode
+*.md
+
+# Ignore Docker-specific files
+Dockerfile
+docker-compose.yml
+
+# Ignore environment files
+.env

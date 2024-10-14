@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API=http://localhost:8787
+    networks:
+      - my_net
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8787:8787"
+    environment:
+      - DATABASE_URL=postgresql://test1_owner:XV7tWKoP5abR@ep-billowing-scene-a5zeouod.us-east-2.aws.neon.tech/test1?sslmode=require
+    networks:
+      - my_net
+
+networks:
+  my_net:
+    driver: bridge

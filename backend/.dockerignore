@@ -1,0 +1,13 @@
+# Ignore .wrangler directory
+.wrangler
+
+# Node modules (if installed locally, no need to include them)
+node_modules
+
+# Other unnecessary files for Docker
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+.env
+README.md

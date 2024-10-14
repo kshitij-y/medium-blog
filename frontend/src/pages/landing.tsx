@@ -61,36 +61,16 @@ export const Landing = () => {
 
         <div className="border-t border-gray-300 py-4 text-sm text-gray-600 bg-[#DCD7C9]">
             <div className="flex justify-center space-x-4">
-                <a className="hover:underline">
-                Help
-                </a>
-                <a className="hover:underline">
-                Status
-                </a>
-                <a className="hover:underline">
-                About
-                </a>
-                <a className="hover:underline">
-                Careers
-                </a>
-                <a className="hover:underline">
-                Press
-                </a>
-                <a className="hover:underline">
-                Blog
-                </a>
-                <a className="hover:underline">
-                Privacy
-                </a>
-                <a className="hover:underline">
-                Terms
-                </a>
-                <a className="hover:underline">
-                Text to speech
-                </a>
-                <a className="hover:underline">
-                Teams
-                </a>
+                <a className="hover:underline">Help</a>
+                <a className="hover:underline">Status</a>
+                <a className="hover:underline">About</a>
+                <a className="hover:underline">Careers</a>
+                <a className="hover:underline">Press</a>
+                <a className="hover:underline">Blog</a>
+                <a className="hover:underline">Privacy</a>
+                <a className="hover:underline">Terms</a>
+                <a className="hover:underline">Text to speech</a>
+                <a className="hover:underline">Teams</a>
             </div>
         </div>
         <div>
