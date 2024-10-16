@@ -1,5 +1,4 @@
 import { Avtar } from "./Avtar";
-
 interface BlogProps {
     authorName: string,
     title: string,

@@ -22,12 +22,10 @@ export const Signin = ({ isOpen, onClose, navSignup }) => {
                 }> = await axios.post(`${backend_api}/api/v1/user/signin`, {
                 email,
                 password,
-            });
-            setMessage(res.data.message); // Set the message in state
+            }, { withCredentials: true });
+            setMessage(res.data.message);
             console.log('Logged in status:', res.data.loggedIn);
             if(res.data.loggedIn){
-                localStorage.setItem("token", res.data.jwt);
-                localStorage.setItem("name", res.data.name);
                 navigate("/blogs")
             }
         } catch (error) {

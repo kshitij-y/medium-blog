@@ -3,13 +3,14 @@ import profile from '../assets/profile.svg';
 import followers from '../assets/followers.svg';
 import setting from '../assets/setting.svg';
 import signout from '../assets/signout.svg';
+import Cookies from 'js-cookie';
 
 export const SidePlate = () => {
     const navigate = useNavigate();
 
     const handleLogOut = () => {
-        localStorage.removeItem("name");
-        localStorage.removeItem("token");
+        Cookies.remove("name");
+        Cookies.remove("token");
         navigate('/');
 
     }

@@ -4,7 +4,6 @@ import { SidePlate } from "../components/SidePlate";
 import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from 'axios';
 
-
 export const Blogs = () => {
     const [blogs, setBlogs] = useState<any[]>([]);
     const backend_api = import.meta.env.VITE_API;
@@ -12,11 +11,7 @@ export const Blogs = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res: AxiosResponse<any> = await axios.get(`${backend_api}/api/v1/blog/bulk`, {
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem("token")
-                    }
-                });
+                const res: AxiosResponse<any> = await axios.get(`${backend_api}/api/v1/blog/bulk`, { withCredentials: true });
                 setBlogs(res.data.blog);
                 console.log(res.data.blog);
             } catch (error) {

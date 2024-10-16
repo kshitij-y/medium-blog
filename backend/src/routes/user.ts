@@ -1,4 +1,5 @@
-import { Hono } from "hono";
+import { Hono } from 'hono'
+import {getCookie, getSignedCookie, setCookie, setSignedCookie, deleteCookie } from 'hono/cookie'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
@@ -12,7 +13,6 @@ export const userRouter = new Hono<{
       JWT_SECRET: string,
     }
 }>()
-
 
 
 userRouter.post('/signup', async (c) => {
@@ -58,11 +58,11 @@ userRouter.post('/signup', async (c) => {
       });
   
       const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-      
+      setCookie(c, "token", jwt);
+      setCookie(c, "name", body.name);
       return c.json({
         name: user.name,
         loggedIn: true,
-        jwt,
         message: "Signed Up"
       });
     } catch (e) {
@@ -116,10 +116,13 @@ userRouter.post('/signin', async (c) => {
       }
       
       const jwt = await sign({id: user.id}, c.env.JWT_SECRET);
+
+      setCookie(c, "token", jwt);
+      setCookie(c, "name", user.name || "username");
+
       return c.json({
         name: user.name,
         loggedIn: true,
-        jwt: jwt,
         message: "Login Successfull",
       });
     } catch (error) {

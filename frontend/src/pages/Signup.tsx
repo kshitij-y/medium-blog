@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom";
-
+import Cookies from 'js-cookie';
 //@ts-ignore
 export const Signup = ({isOpen, onClose, navSignin}) => {
     if(!isOpen) return null;
@@ -28,8 +28,8 @@ export const Signup = ({isOpen, onClose, navSignin}) => {
             });
             setMessage(res.data.message);
             if(res.data.loggedIn){
-                localStorage.setItem("name", res.data.name);
-                localStorage.setItem("token", res.data.jwt);
+                Cookies.set("name", res.data.name);
+                Cookies.set("token", res.data.jwt);
                 navigate("/blogs")
             }
 

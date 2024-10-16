@@ -11,11 +11,7 @@ export const Blog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res: AxiosResponse<any> = await axios.get(`${backend_api}/api/v1/blog/single/${id}`, {
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem("token")
-                    }
-                });
+                const res: AxiosResponse<any> = await axios.get(`${backend_api}/api/v1/blog/single/${id}`, {withCredentials: true});
                 setBlog(res.data);  // Set the blog data in state
                 console.log(res);
             } catch (error) {

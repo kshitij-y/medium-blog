@@ -5,10 +5,10 @@ import write from '../assets/write.svg';
 import threeLine from '../assets/threeLine.svg'
 import { SidePlate } from "./SidePlate";
 import { useState } from "react";
-
+import Cookies from 'js-cookie';
 
 export const Appbar = () => {
-    const name = localStorage.getItem("name") || "User";
+    const name = Cookies.get("name")?.toUpperCase() || "User";
     const fChar = name[0];
     const navigate = useNavigate();
     const [toggleSide, setToogleside] = useState(false)

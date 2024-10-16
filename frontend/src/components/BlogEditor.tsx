@@ -27,11 +27,7 @@ export const BlogEditor: React.FC = () => {
             }> = await axios.post(`${backend_api}/api/v1/blog`, {
                 title: title,
                 content: editorHtml
-            },{
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("token")
-                }
-            });
+            },{withCredentials: true});
     
             setMessage(res.data.message);
             if (res.status === 200) {

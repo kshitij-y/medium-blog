@@ -5,10 +5,11 @@ import medium from '../assets/logo.svg';
 import threeLine from '../assets/threeLine.svg'
 import { SidePlate } from "../components/SidePlate";
 import { useState } from "react";
+import Cookies from 'js-cookie';
 
 export const WriteBlogs: React.FC = () => {
     const navigate = useNavigate();
-    const name = localStorage.getItem("name") || "User";
+    const name = Cookies.get("name") || "User";
     const fChar = name[0].toUpperCase();
     const [toggleSide, setToogleside] = useState(false)
     const handleSide = () => {
